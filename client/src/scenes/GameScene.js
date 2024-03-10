@@ -18,6 +18,7 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         this.createUI();
+        this.cameras.main.setBackgroundColor('#35654d');
         this.deck = new Deck(this);
         this.deck.shuffleDeck();
 
