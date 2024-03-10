@@ -4,6 +4,9 @@ import { Card } from '../objects/Card.js';
 export class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
+     }
+     init(data) {
+        this.gameId = data.id; // Получаем ID из переданных данных
     }
 
     preload() {
@@ -17,6 +20,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     create() {
+        console.log("Игра началась с ID:", this.gameId);    
         this.createUI();
         this.cameras.main.setBackgroundColor('#35654d');
         this.deck = new Deck(this);
@@ -182,15 +186,3 @@ export class GameScene extends Phaser.Scene {
     }
     
 }
-
-// Настройка и запуск игры
-const config = {
-    type: Phaser.AUTO,
-    parent: 'game-container',
-    width: window.innerWidth,
-    height: window.innerHeight,
-    scene: [GameScene]
-};
-
-
-const game = new Phaser.Game(config);
