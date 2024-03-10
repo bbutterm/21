@@ -41,7 +41,7 @@ export class GameScene extends Phaser.Scene {
 
     createUI() {
         // Создание и инициализация текстовых объектов
-        this.playerScoreText = this.add.text(10, 580, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
+        this.playerScoreText = this.add.text(10, 680, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
         this.dealerScoreText = this.add.text(10, 10, 'Дилер: 0', { fontSize: '50px', fill: '#FFF' });
         this.hitButton = this.add.text(200, 550, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
@@ -59,9 +59,9 @@ export class GameScene extends Phaser.Scene {
         .on('pointerover', () => this.standButton.setStyle({ fill: '#f39c12' }))
         .on('pointerout', () => this.standButton.setStyle({ fill: '#fff' }));
 
-        this.hitButton.setPosition(70, 2532 - 500); // Центрировать и поднять немного выше нижнего края
-        this.standButton.setPosition(1170 -670, 2532 - 500); // Справа от кнопки "Взять карту"
-        this.playerScoreText.setPosition(10, 2532 - 600); // Ниже, ближе к игроку
+        this.hitButton.setPosition(70, 2532 - 600); // Центрировать и поднять немного выше нижнего края
+        this.standButton.setPosition(1170 -670, 2532 - 600); // Справа от кнопки "Взять карту"
+        this.playerScoreText.setPosition(10, 2532 - 700); // Ниже, ближе к игроку
         this.dealerScoreText.setPosition(10, 100); // В верхней части экрана для очков дилера
 
 
