@@ -59,9 +59,9 @@ export class GameScene extends Phaser.Scene {
         .on('pointerover', () => this.standButton.setStyle({ fill: '#f39c12' }))
         .on('pointerout', () => this.standButton.setStyle({ fill: '#fff' }));
 
-        this.hitButton.setPosition(70, 2532 - 600); // Центрировать и поднять немного выше нижнего края
-        this.standButton.setPosition(1170 -670, 2532 - 600); // Справа от кнопки "Взять карту"
-        this.playerScoreText.setPosition(10, 2532 - 700); // Ниже, ближе к игроку
+        this.hitButton.setPosition(70, window.innerHeight - 700); // Центрировать и поднять немного выше нижнего края
+        this.standButton.setPosition(window.innerWidth -570, window.innerHeight - 700); // Справа от кнопки "Взять карту"
+        this.playerScoreText.setPosition(10, innerHeight - 300); // Ниже, ближе к игроку
         this.dealerScoreText.setPosition(10, 100); // В верхней части экрана для очков дилера
 
 
@@ -182,8 +182,8 @@ export class GameScene extends Phaser.Scene {
 const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
-    width: 1170,
-    height: 2532,
+    width: window.innerWidth,
+    height: window.innerHeight,
     scene: [GameScene]
 };
 
