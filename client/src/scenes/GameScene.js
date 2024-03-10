@@ -41,9 +41,9 @@ export class GameScene extends Phaser.Scene {
 
     createUI() {
         // Создание и инициализация текстовых объектов
-        this.playerScoreText = this.add.text(10, 580, 'Игрок: 0', { fontSize: '16px', fill: '#FFF' });
-        this.dealerScoreText = this.add.text(10, 10, 'Дилер: 0', { fontSize: '16px', fill: '#FFF' });
-        this.hitButton = this.add.text(200, 550, 'Взять карту', { font: '24px Arial', fill: '#fff', backgroundColor: '#8B4513' })
+        this.playerScoreText = this.add.text(10, 580, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
+        this.dealerScoreText = this.add.text(10, 10, 'Дилер: 0', { fontSize: '50px', fill: '#FFF' });
+        this.hitButton = this.add.text(200, 550, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
         .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
         .setInteractive()
@@ -51,13 +51,20 @@ export class GameScene extends Phaser.Scene {
         .on('pointerover', () => this.hitButton.setStyle({ fill: '#f39c12' }))
         .on('pointerout', () => this.hitButton.setStyle({ fill: '#fff' }));
 
-    this.standButton = this.add.text(400, 550, 'Остановиться', { font: '24px Arial', fill: '#fff', backgroundColor: '#8B4513' })
+    this.standButton = this.add.text(400, 550, 'Остановиться', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
         .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
         .setInteractive()
         .on('pointerdown', () => this.playerStand())
         .on('pointerover', () => this.standButton.setStyle({ fill: '#f39c12' }))
         .on('pointerout', () => this.standButton.setStyle({ fill: '#fff' }));
+
+        this.hitButton.setPosition(70, 2532 - 500); // Центрировать и поднять немного выше нижнего края
+        this.standButton.setPosition(1170 -670, 2532 - 500); // Справа от кнопки "Взять карту"
+        this.playerScoreText.setPosition(10, 2532 - 600); // Ниже, ближе к игроку
+        this.dealerScoreText.setPosition(10, 100); // В верхней части экрана для очков дилера
+
+
 }
     
     
@@ -76,7 +83,9 @@ export class GameScene extends Phaser.Scene {
     playerStand() {
         while (this.calculateScore(this.dealerHand) < 17) {
             this.dealerHand.push(this.deck.dealCard());
+            this.updateScores();
         }
+
         this.displayCards();
         let playerScore = this.calculateScore(this.playerHand);
         let dealerScore = this.calculateScore(this.dealerHand);
@@ -93,8 +102,8 @@ export class GameScene extends Phaser.Scene {
 
     displayCards() {
         const startX = 100;
-        const startYPlayer = 500;
-        const startYDealer = 100;
+        const startYPlayer = 1700;
+        const startYDealer = 300;
         const cardOffset = 60;
     
         // Отображаем карты игрока
@@ -153,11 +162,11 @@ export class GameScene extends Phaser.Scene {
     
     endGame(message) {
         // Отображаем результат игры
-        let resultText = this.add.text(400, 300, message, { fontSize: '32px', fill: '#FFF' }).setOrigin(0.5);
+        let resultText = this.add.text(400, 1000, message, { fontSize: '50px', fill: '#FFF' }).setOrigin(0.5);
         this.hitButton.removeInteractive();
         this.standButton.removeInteractive();
         // Кнопка "Новая игра"
-        let restartButton = this.add.text(400, 400, 'Новая игра', { font: '24px Arial', fill: '#fff', backgroundColor: '#8B4513' })
+        let restartButton = this.add.text(400, 1100, 'Новая игра', { font: '60px Arial', fill: '#fff', backgroundColor: '#8B4513' })
     .setPadding(10, 10, 10, 10)
     .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
     .setInteractive()
@@ -173,9 +182,10 @@ export class GameScene extends Phaser.Scene {
 const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
-    width: 800,
-    height: 600,
-    scene: GameScene
+    width: 1170,
+    height: 2532,
+    scene: [GameScene]
 };
+
 
 const game = new Phaser.Game(config);
