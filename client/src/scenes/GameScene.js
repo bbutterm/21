@@ -40,18 +40,24 @@ export class GameScene extends Phaser.Scene {
     }
 
     createUI() {
-        // Создание и инициализация текстовых объектов
-        this.playerScoreText = this.add.text(10, 680, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
-        this.dealerScoreText = this.add.text(10, 10, 'Дилер: 0', { fontSize: '50px', fill: '#FFF' });
-        this.hitButton = this.add.text(200, 550, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
+        // Расчёт координат для элементов интерфейса в зависимости от размера экрана
+        const camera_width = this.cameras.main.width;
+        const camera_height = this.cameras.main.height;
+    
+        // Создание и инициализация текстовых объектов для очков игрока и дилера
+        this.playerScoreText = this.add.text(10, camera_height-200, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
+        this.dealerScoreText = this.add.text(10, 0, 'Дилер: 0', { fontSize: '50px', fill: '#FFF' });
+    
+        // Кнопки управления
+        this.hitButton = this.add.text(camera_width/6, camera_height-camera_height/15, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
         .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
         .setInteractive()
         .on('pointerdown', () => this.playerHit())
         .on('pointerover', () => this.hitButton.setStyle({ fill: '#f39c12' }))
         .on('pointerout', () => this.hitButton.setStyle({ fill: '#fff' }));
-
-    this.standButton = this.add.text(400, 550, 'Остановиться', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
+    
+        this.standButton = this.add.text(camera_width/2, camera_height-camera_height/15, 'Остановиться', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
         .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
         .setInteractive()
@@ -59,14 +65,15 @@ export class GameScene extends Phaser.Scene {
         .on('pointerover', () => this.standButton.setStyle({ fill: '#f39c12' }))
         .on('pointerout', () => this.standButton.setStyle({ fill: '#fff' }));
 
-        this.hitButton.setPosition(70, window.innerHeight - 700); // Центрировать и поднять немного выше нижнего края
-        this.standButton.setPosition(window.innerWidth -570, window.innerHeight - 700); // Справа от кнопки "Взять карту"
-        this.playerScoreText.setPosition(10, innerHeight - 300); // Ниже, ближе к игроку
-        this.dealerScoreText.setPosition(10, 100); // В верхней части экрана для очков дилера
-
-
-}
-    
+        this.cardPositions = {
+            playerX: 100,
+            playerY: camera_height-camera_height/5,
+            dealerX: 100,
+            dealerY: camera_height/10,
+            cardOffset: camera_width/10 // Расстояние между картами
+        };
+    }
+        
     
     
 
@@ -101,21 +108,19 @@ export class GameScene extends Phaser.Scene {
     
 
     displayCards() {
-        const startX = 100;
-        const startYPlayer = 1700;
-        const startYDealer = 300;
-        const cardOffset = 60;
+        // Использование сохранённых координат для расположения карт
+        const { playerX, playerY, dealerX, dealerY, cardOffset } = this.cardPositions;
     
         // Отображаем карты игрока
         this.playerHand.forEach((cardData, index) => {
             const card = new Card(this, cardData.name);
-            card.setPosition(startX + (index * cardOffset), startYPlayer);
+            card.setPosition(playerX + (index * cardOffset), playerY);
         });
     
         // Отображаем карты дилера
         this.dealerHand.forEach((cardData, index) => {
             const card = new Card(this, cardData.name);
-            card.setPosition(startX + (index * cardOffset), startYDealer);
+            card.setPosition(dealerX + (index * cardOffset), dealerY);
         });
     }
     
