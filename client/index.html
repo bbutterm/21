@@ -2,10 +2,15 @@
 <html>
 <head>
     <title>Phaser Game</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div id="game-container"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+    <script>
+        // Инициализация Telegram Web App
+        Telegram.WebApp.ready();
+    </script>
     <script type="module">
         
         import { MenuScene } from './src/scenes/MenuScene.js'; // Убедитесь, что путь к файлу верный

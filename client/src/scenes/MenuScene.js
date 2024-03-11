@@ -6,7 +6,8 @@ export class MenuScene extends Phaser.Scene {
     create() {
         // Задаем фон
         this.cameras.main.setBackgroundColor('#35654d');
-
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        console.log(user); // Выводит информацию о пользователе
          // Извлечение ID из хэша URL
         const id = window.location.hash.slice(1);
 

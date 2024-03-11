@@ -1,6 +1,8 @@
 import { Deck } from '../objects/Deck.js';
 import { Card } from '../objects/Card.js';
 
+    
+
 export class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
@@ -8,7 +10,8 @@ export class GameScene extends Phaser.Scene {
      init(data) {
         this.gameId = data.id; // Получаем ID из переданных данных
     }
-
+    // Получение данных о пользователе
+    
     preload() {
         this.load.image('back', 'assets/cards/back1.png'); 
         for (let suit of ['C', 'D', 'H', 'S']) {
@@ -30,6 +33,12 @@ export class GameScene extends Phaser.Scene {
         this.dealerHand = [];
         
         this.dealInitialCards();
+        function sendDataToBot(data) {
+            Telegram.WebApp.sendData(data);
+        }
+        
+        // Пример отправки строки данных
+        sendDataToBot('Это тестовые данные');
 
         
     }
