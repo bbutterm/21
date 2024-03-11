@@ -33,13 +33,6 @@ export class GameScene extends Phaser.Scene {
         this.dealerHand = [];
         
         this.dealInitialCards();
-        function sendDataToBot(data) {
-            Telegram.WebApp.sendData(data);
-        }
-        
-        // Пример отправки строки данных
-        sendDataToBot('Это тестовые данные');
-
         
     }
 
@@ -91,6 +84,12 @@ export class GameScene extends Phaser.Scene {
     
 
     playerHit() {
+        function sendDataToBot(data) {
+            Telegram.WebApp.sendData(data);
+        }
+        
+        // Пример отправки строки данных
+        sendDataToBot('Это тестовые данные');
         this.playerHand.push(this.deck.dealCard());
         this.displayCards();
         this.updateScores();
