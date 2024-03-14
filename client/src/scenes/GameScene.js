@@ -97,6 +97,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     playerStand() {
+        Telegram.WebApp.sendData("data");
         while (this.calculateScore(this.dealerHand) < 17) {
             this.dealerHand.push(this.deck.dealCard());
             this.updateScores();
