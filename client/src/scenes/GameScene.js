@@ -8,6 +8,8 @@ export class GameScene extends Phaser.Scene {
         super('GameScene');
         this.balance = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
+        this.playerHand = [];
+        this.dealerHand = [];
      }
     init(user) {
         this.user = user; // Получаем ID из переданных данных
@@ -29,14 +31,14 @@ export class GameScene extends Phaser.Scene {
         const user = Telegram.WebApp.initDataUnsafe.user || { id: '0' };
         console.log("Игрок:", user.first_name);
         this.loadPlayerData(user.id);
+
+        
     // Получение данных игрока
         this.createUI();
         this.cameras.main.setBackgroundColor('#35654d');
         this.deck = new Deck(this);
         this.deck.shuffleDeck();
 
-        this.playerHand = [];
-        this.dealerHand = [];
         
         this.dealInitialCards();
         
