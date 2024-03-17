@@ -70,6 +70,14 @@ export class GameScene extends Phaser.Scene {
     }
 
     createUI() {
+        if (this.balance < 10) {
+            const centerX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+            const centerY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+            const style = { fontSize: '30px', fill: '#FFF' };
+            const text = this.add.text(centerX, centerY, 'Слишком мало денег, подождите до завтра.\nБаланс: ' + this.balance, style)
+                .setOrigin(0.5); 
+            return;
+        }
         // Расчёт координат для элементов интерфейса в зависимости от размера экрана
         const camera_width = this.cameras.main.width;
         const camera_height = this.cameras.main.height;
