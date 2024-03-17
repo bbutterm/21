@@ -267,11 +267,16 @@ export class GameScene extends Phaser.Scene {
     .setOrigin(0.5);
 
     if (message='WIN') {
-        this.balance += this.currentBet * 2; // Удваиваем ставку и добавляем к балансу
-    } else if(message="LOSER") {
-        this.balance -= this.currentBet; // Вычитаем ставку из баланса
+        this.balance += this.currentBet * 2; 
+        this.updatePlayerScore(this.balance);
+        console.log("win")
+    }// Удваиваем ставку и добавляем к балансу
+    if(message='LOSER') {
+        this.balance -= this.currentBet;
+        this.updatePlayerScore(this.balance);
+        console.log("lose") // Вычитаем ставку из баланса
     }
-    this.updatePlayerScore(this.balance);
+    
     
 }
 updatePlayerScore(score) {
