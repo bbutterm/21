@@ -73,9 +73,24 @@ export class GameScene extends Phaser.Scene {
         const camera_width = this.cameras.main.width;
         const camera_height = this.cameras.main.height;
         
-        // Создание и инициализация текстовых объектов для очков игрока и дилера
-        this.playerScoreText = this.add.text(10, camera_height-200, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
-        this.dealerScoreText = this.add.text(10, 0, 'Дилер: 0', { fontSize: '50px', fill: '#FFF' });
+
+        const user = { id: '123', name: 'Игрок 1' };
+
+        // Отображение ID и имени игрока
+        this.add.text(camera_width - 200, 20, `ID: ${user.id}\nName: ${user.name}`, { 
+            font: '20px Arial', 
+            fill: '#fff',
+            align: 'right'
+        });
+
+        // Отображение текущей ставки
+        this.betText = this.add.text(camera_width - 200, 80, `Ставка: ${this.currentBet}`, { 
+            font: '20px Arial', 
+            fill: '#fff',
+            align: 'right'
+        });
+
+        // Кнопки для управления ставками
     
         // Кнопки управления
         this.hitButton = this.add.text(camera_width/6, camera_height-camera_height/15, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
