@@ -27,7 +27,6 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         console.log("Игра началась с ID:", this.gameId);  
-        loadPlayerData(this.user.id)
         console.log("Игрок:", this.user.first_name);
         this.loadPlayerData(this.user.id);
         this.playerHand = [];
