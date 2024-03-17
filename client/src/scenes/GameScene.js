@@ -123,7 +123,7 @@ export class GameScene extends Phaser.Scene {
             playerX: 100,
             playerY: camera_height-camera_height/5,
             dealerX: 100,
-            dealerY: camera_height/10,
+            dealerY: camera_height/8,
             cardOffset: camera_width/10 // Расстояние между картами
         };
     }
@@ -138,15 +138,19 @@ export class GameScene extends Phaser.Scene {
     }
     
     createBetButtons(x, y) {
-        const betButtonStyle = { font: '36px Arial', fill: '#fff', backgroundColor: '#008f39' };
+        const betButtonStyle = { font: '36px Arial', fill: '#fff', backgroundColor: '#8B4513' };
 
         // Кнопка увеличения ставки
         this.add.text(x, y, 'Увеличить ставку', betButtonStyle)
+            .setPadding(10, 10, 10, 10)
+            .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
             .setInteractive()
             .on('pointerdown', () => this.changeBet(10));
 
         // Кнопка уменьшения ставки
-        this.add.text(x, y + 50, 'Уменьшить ставку', betButtonStyle)
+        this.add.text(x, y + 70, 'Уменьшить ставку', betButtonStyle)
+            .setPadding(10, 10, 10, 10)
+            .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
             .setInteractive()
             .on('pointerdown', () => this.changeBet(-10));
     }
