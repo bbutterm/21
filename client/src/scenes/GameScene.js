@@ -6,7 +6,7 @@ import { Card } from '../objects/Card.js';
 export class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
-        this.playerScore = 100; // Начальное значение будет установлено после загрузки данных
+        this.balance = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
      }
     init(user) {
@@ -46,16 +46,16 @@ export class GameScene extends Phaser.Scene {
             .then(response => response.json())
             .then(data => {
                 // Если сервер вернул данные, используем их
-                this.playerScore = data.score;
+                this.balance = data.score;
             })
             .catch(error => {
                 // Если произошла ошибка или данные не получены, используем значения по умолчанию
                 console.error('Ошибка при получении данных игрока:', error);
-                this.playerScore = 100; // Присваиваем 100 очков по умолчанию
+                this.balance = 100; // Присваиваем 100 очков по умолчанию
             })
             .finally(() => {
                 // Отображение очков игрока
-                this.scoreText = this.add.text(10, 10, `Очки: ${this.playerScore}`, { fontSize: '32px', fill: '#FFF' });
+                this.scoreText = this.add.text(10, 10, `Очки: ${this.balance}`, { fontSize: '32px', fill: '#FFF' });
             });
     }
 
@@ -251,7 +251,7 @@ export class GameScene extends Phaser.Scene {
     endGame(message) { // "Игрок выиграл" или "Игрок проиграл"
 
         const user = Telegram.WebApp.initDataUnsafe.user;
-        this.updatePlayerScore(user.id, score);
+        this.updatePlayerScore(user.id, balance);
         // Отображаем результат игры
         let resultText = this.add.text(400, 1000, message, { fontSize: '50px', fill: '#FFF' }).setOrigin(0.5);
         this.hitButton.removeInteractive();
