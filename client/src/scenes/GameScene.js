@@ -240,7 +240,7 @@ export class GameScene extends Phaser.Scene {
         //const user = Telegram.WebApp.initDataUnsafe.user;
         const telegramId = this.user.id;
     
-        fetch('https://21server.vercel.app/api/player', {
+        fetch(`https://21server.vercel.app/api/player?id=${telegramId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
