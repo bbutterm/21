@@ -161,7 +161,7 @@ export class GameScene extends Phaser.Scene {
         this.updateScores();
         // Проверка на превышение 21 очка
         if (this.calculateScore(this.playerHand) > 21) {
-            this.endGame('Игрок проиграл');
+            this.endGame('Вы проиграли');
         }
     }
 
@@ -262,11 +262,11 @@ export class GameScene extends Phaser.Scene {
     .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
     .setInteractive()
     .on('pointerdown', () => {
-        this.scene.restart();
+        this.scene.restart();   
     })
     .setOrigin(0.5);
 
-    if (message="Победа") {
+    if (message='Победа') {
         this.balance += this.currentBet * 2; // Удваиваем ставку и добавляем к балансу
     } else if(message="Вы проиграли") {
         this.balance -= this.currentBet; // Вычитаем ставку из баланса
