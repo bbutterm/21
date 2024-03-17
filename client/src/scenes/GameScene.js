@@ -167,6 +167,9 @@ export class GameScene extends Phaser.Scene {
         if (this.calculateScore(this.playerHand) > 21) {
             this.determineWinner();
         }
+        if (this.calculateScore(this.playerHand) === 21) {
+            this.playerStand();
+        }
     }
 
     playerStand() {
