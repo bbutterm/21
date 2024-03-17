@@ -26,7 +26,7 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         console.log("Игра началась с ID:", this.gameId);  
-        const user = Telegram.WebApp.initDataUnsafe.user;
+        const user = Telegram.WebApp.initDataUnsafe.user || { id: '0' };
         console.log("Игрок:", user.first_name);
         this.loadPlayerData(user.id);
     // Получение данных игрока
@@ -44,22 +44,20 @@ export class GameScene extends Phaser.Scene {
     }
     loadPlayerData(telegramId) {
         fetch(`https://21server.vercel.app/api/player?id=${telegramId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка при получении данных');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
+                // Если сервер вернул данные, используем их
                 this.playerScore = data.score;
-                this.scoreText = this.add.text(10, 10, `Очки: ${this.playerScore}`, { fontSize: '32px', fill: '#FFF' });
-
-                // Создание кнопок после загрузки данных
-                this.createBetButtons();
             })
             .catch(error => {
+                // Если произошла ошибка или данные не получены, используем значения по умолчанию
                 console.error('Ошибка при получении данных игрока:', error);
-                // Здесь можно обработать ошибку, например, показать сообщение пользователю
+                this.playerScore = 100; // Присваиваем 100 очков по умолчанию
+            })
+            .finally(() => {
+                // Отображение очков игрока
+                this.scoreText = this.add.text(10, 10, `Очки: ${this.playerScore}`, { fontSize: '32px', fill: '#FFF' });
+                this.createBetButtons();
             });
     }
 
