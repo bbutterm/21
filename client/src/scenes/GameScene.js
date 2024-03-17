@@ -161,7 +161,7 @@ export class GameScene extends Phaser.Scene {
         this.updateScores();
         // Проверка на превышение 21 очка
         if (this.calculateScore(this.playerHand) > 21) {
-            this.endGame('Вы проиграли');
+            this.endGame('LOSER');
         }
     }
 
@@ -176,12 +176,12 @@ export class GameScene extends Phaser.Scene {
         let playerScore = this.calculateScore(this.playerHand);
         let dealerScore = this.calculateScore(this.dealerHand);
     
-        if (dealerScore > 21 || playerScore > dealerScore) {
-            this.endGame('Игрок выиграл!');
+        if (dealerScore > 21 || playerScore <=21) {
+            this.endGame('WIN');
         } else if (dealerScore > playerScore) {
-            this.endGame('Дилер выиграл!');
+            this.endGame('LOSER');
         } else {
-            this.endGame('Ничья!');
+            this.endGame('DRAW');
         }
     }
     
@@ -234,15 +234,15 @@ export class GameScene extends Phaser.Scene {
         let playerScore = this.calculateScore(this.playerHand);
         let dealerScore = this.calculateScore(this.dealerHand);
         if (playerScore > 21) {
-            this.endGame('Вы проиграли');
+            this.endGame('LOSER');
         } else if (dealerScore > 21 || playerScore <= 21) {
-            this.endGame('Победа');
+            this.endGame('WIN');
         } else if (playerScore < dealerScore) {
-            this.endGame('Вы проиграли');
+            this.endGame('LOSER');
         } else if (playerScore>=dealerScore) {  
-            this.endGame('Победа');
+            this.endGame('WIN');
         } else {
-            this.endGame('Ничья');
+            this.endGame('DRAW');
         }
     }
     
@@ -266,9 +266,9 @@ export class GameScene extends Phaser.Scene {
     })
     .setOrigin(0.5);
 
-    if (message='Победа') {
+    if (message='WIN') {
         this.balance += this.currentBet * 2; // Удваиваем ставку и добавляем к балансу
-    } else if(message="Вы проиграли") {
+    } else if(message="LOSER") {
         this.balance -= this.currentBet; // Вычитаем ставку из баланса
     }
     this.updatePlayerScore(this.balance);
