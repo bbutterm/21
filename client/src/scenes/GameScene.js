@@ -236,26 +236,12 @@ export class GameScene extends Phaser.Scene {
         }
     }
     
-    updatePlayerScore(score) {
-        //const user = Telegram.WebApp.initDataUnsafe.user;
-        const telegramId = this.user.id;
     
-        fetch(`https://21server.vercel.app/api/player?id=${telegramId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: telegramId, score }),
-        })
-        .then(response => response.text())
-        .then(data => console.log(data))
-        .catch((error) => console.error('Ошибка:', error));
-    }
     
 
     endGame(message) { // "Игрок выиграл" или "Игрок проиграл"
         //const user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
-        this.updatePlayerScore(this.balance);
+        
         // Отображаем результат игры
         let resultText = this.add.text(400, 1000, message, { fontSize: '50px', fill: '#FFF' }).setOrigin(0.5);
         this.hitButton.removeInteractive();
@@ -276,19 +262,22 @@ export class GameScene extends Phaser.Scene {
     } else {
         this.balance -= this.currentBet; // Вычитаем ставку из баланса
     }
+    this.updatePlayerScore(this.balance);
     
-    }
-    updatePlayerScore(telegramId, score) {
-        fetch('https://21server.vercel.app/api/player', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: telegramId, score }),
-        })
-        .then(response => response.text())
-        .then(data => console.log(data))
-        .catch((error) => console.error('Ошибка при обновлении данных игрока:', error));
-    }
-    
+}
+updatePlayerScore(score) {
+    //const user = Telegram.WebApp.initDataUnsafe.user;
+    const telegramId = this.user.id;
+
+    fetch(`https://21server.vercel.app/api/player?id=${telegramId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: telegramId, score }),
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch((error) => console.error('Ошибка:', error));
+}
 }
