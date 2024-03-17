@@ -24,7 +24,7 @@ export class MenuScene extends Phaser.Scene {
             .setPadding(10, 10, 10, 10)
             .setStyle({ backgroundColor: '#8B4513', stroke: '#A52A2A', strokeThickness: 2 })
             .setInteractive()
-            .on('pointerdown', () => this.scene.start('GameScene', { id: id }))
+            .on('pointerdown', () => this.scene.start('GameScene', { userId: user.id, score: user.score }))
             .on('pointerover', () => playButton.setStyle({ fill: '#f39c12' }))
             .on('pointerout', () => playButton.setStyle({ fill: '#fff' }))
             .setOrigin(0.5);

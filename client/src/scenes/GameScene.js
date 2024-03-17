@@ -9,8 +9,9 @@ export class GameScene extends Phaser.Scene {
         this.playerScore = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
      }
-     init(data) {
-        this.gameId = data.id; // Получаем ID из переданных данных
+     init(userId,score) {
+        this.userId = userId;
+        this.playerScore = 100; // Получаем ID из переданных данных
     }
     // Получение данных о пользователе
     
