@@ -176,7 +176,7 @@ export class GameScene extends Phaser.Scene {
         let playerScore = this.calculateScore(this.playerHand);
         let dealerScore = this.calculateScore(this.dealerHand);
     
-        if (dealerScore > 21 || playerScore <=21) {
+        if (dealerScore > 21 || playerScore >dealerScore) {
             this.endGame('WIN');
         } else if (dealerScore > playerScore) {
             this.endGame('LOSER');
