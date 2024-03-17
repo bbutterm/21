@@ -9,9 +9,8 @@ export class GameScene extends Phaser.Scene {
         this.playerScore = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
      }
-     init(userId,score) {
-        this.userId = userId;
-        this.playerScore = 100; // Получаем ID из переданных данных
+     init(user) {
+        this.user = user; // Получаем ID из переданных данных
     }
     // Получение данных о пользователе
     
@@ -58,7 +57,6 @@ export class GameScene extends Phaser.Scene {
             .finally(() => {
                 // Отображение очков игрока
                 this.scoreText = this.add.text(10, 10, `Очки: ${this.playerScore}`, { fontSize: '32px', fill: '#FFF' });
-                this.createBetButtons();
             });
     }
 
@@ -85,14 +83,6 @@ export class GameScene extends Phaser.Scene {
         const camera_width = this.cameras.main.width;
         const camera_height = this.cameras.main.height;
         
-        //ставки 
-        this.add.text(10, 50, 'Повысить ставку', { fontSize: '24px', fill: '#FFF' })
-            .setInteractive()
-            .on('pointerdown', () => this.changeBet(10));
-
-        this.add.text(10, 80, 'Понизить ставку', { fontSize: '24px', fill: '#FFF' })
-            .setInteractive()
-            .on('pointerdown', () => this.changeBet(-10));
         // Создание и инициализация текстовых объектов для очков игрока и дилера
         this.playerScoreText = this.add.text(10, camera_height-200, 'Игрок: 0', { fontSize: '50px', fill: '#FFF' });
         this.dealerScoreText = this.add.text(10, 0, 'Дилер: 0', { fontSize: '50px', fill: '#FFF' });
