@@ -8,12 +8,11 @@ export class GameScene extends Phaser.Scene {
         super('GameScene');
         this.balance = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
-        this.playerHand = [];
-        this.dealerHand = [];
+        this.user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
      }
-    init(user) {
-        this.user = user; // Получаем ID из переданных данных
-    }
+    // init(user) {
+    //     this.user = user; // Получаем ID из переданных данных
+    // }
     // Получение данных о пользователе
     
     preload() {
@@ -28,10 +27,11 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         console.log("Игра началась с ID:", this.gameId);  
-        const user = Telegram.WebApp.initDataUnsafe.user || { id: '0' };
-        console.log("Игрок:", user.first_name);
-        this.loadPlayerData(user.id);
-
+    
+        console.log("Игрок:", this.user.first_name);
+        this.loadPlayerData(this.user.id);
+        this.playerHand = [];
+        this.dealerHand = [];
         
     // Получение данных игрока
         this.createUI();
@@ -57,7 +57,7 @@ export class GameScene extends Phaser.Scene {
             })
             .finally(() => {
                 // Отображение очков игрока
-                this.scoreText = this.add.text(10, 10, `Очки: ${this.balance}`, { fontSize: '32px', fill: '#FFF' });
+                this.scoreText = this.add.text(this.cameras.main.width - 350, 100, `Очки: ${this.balance}`, { fontSize: '50px', fill: '#FFF' });
             });
     }
 
@@ -74,26 +74,27 @@ export class GameScene extends Phaser.Scene {
         // Расчёт координат для элементов интерфейса в зависимости от размера экрана
         const camera_width = this.cameras.main.width;
         const camera_height = this.cameras.main.height;
-        
+        //const user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
 
-        const user = { id: '123', name: 'Игрок 1' };
-
+        //const user = { id: this.user.id, name: 'Игрок 1' };
+        this.playerScoreText = this.add.text(10, camera_height - 200, 'Игрок: 0', { fontSize: '70px', fill: '#FFF' });
+        this.dealerScoreText = this.add.text(10, 20, 'Дилер: 0', { fontSize: '70px', fill: '#FFF' });
         // Отображение ID и имени игрока
-        this.add.text(camera_width - 200, 20, `ID: ${user.id}\nName: ${user.name}`, { 
-            font: '20px Arial', 
+        this.add.text(camera_width - 350, 5, `ID: ${this.user.id}\nName: ${this.user.first_name}`, { 
+            font: '40px Arial', 
             fill: '#fff',
             align: 'right'
         });
 
         // Отображение текущей ставки
-        this.betText = this.add.text(camera_width - 200, 80, `Ставка: ${this.currentBet}`, { 
-            font: '20px Arial', 
+        this.betText = this.add.text(camera_width-350, 150, `Ставка: ${this.currentBet}`, { 
+            font: '50px Arial', 
             fill: '#fff',
             align: 'right'
         });
 
         // Кнопки для управления ставками
-        this.createBetButtons(camera_width - 200, 120);
+        this.createBetButtons(camera_width - 350, 220);
         // Кнопки управления
         this.hitButton = this.add.text(camera_width/6, camera_height-camera_height/15, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
@@ -122,12 +123,15 @@ export class GameScene extends Phaser.Scene {
         
     changeBet(amount) {
         this.currentBet += amount;
-        this.currentBet = Math.max(10, this.currentBet); // Минимальная ставка 10
+        this.currentBet = Math.max(10, this.currentBet);
+        const camera_width = this.cameras.main.width;
+        const camera_height = this.cameras.main.height;
+        this.betText.setText(`Ставка: ${this.currentBet}`);
         console.log(`Текущая ставка: ${this.currentBet}`);
     }
     
     createBetButtons(x, y) {
-        const betButtonStyle = { font: '16px Arial', fill: '#fff', backgroundColor: '#008f39' };
+        const betButtonStyle = { font: '36px Arial', fill: '#fff', backgroundColor: '#008f39' };
 
         // Кнопка увеличения ставки
         this.add.text(x, y, 'Увеличить ставку', betButtonStyle)
@@ -135,7 +139,7 @@ export class GameScene extends Phaser.Scene {
             .on('pointerdown', () => this.changeBet(10));
 
         // Кнопка уменьшения ставки
-        this.add.text(x, y + 30, 'Уменьшить ставку', betButtonStyle)
+        this.add.text(x, y + 50, 'Уменьшить ставку', betButtonStyle)
             .setInteractive()
             .on('pointerdown', () => this.changeBet(-10));
     }
@@ -234,8 +238,8 @@ export class GameScene extends Phaser.Scene {
     }
     
     updatePlayerScore(score) {
-        const user = Telegram.WebApp.initDataUnsafe.user;
-        const telegramId = user.id;
+        //const user = Telegram.WebApp.initDataUnsafe.user;
+        const telegramId = this.user.id;
     
         fetch('https://21server.vercel.app/api/player', {
             method: 'POST',
@@ -251,9 +255,8 @@ export class GameScene extends Phaser.Scene {
     
 
     endGame(message) { // "Игрок выиграл" или "Игрок проиграл"
-
-        const user = Telegram.WebApp.initDataUnsafe.user;
-        this.updatePlayerScore(user.id, balance);
+        //const user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
+        this.updatePlayerScore(this.balance);
         // Отображаем результат игры
         let resultText = this.add.text(400, 1000, message, { fontSize: '50px', fill: '#FFF' }).setOrigin(0.5);
         this.hitButton.removeInteractive();
@@ -267,7 +270,13 @@ export class GameScene extends Phaser.Scene {
         this.scene.restart();
     })
     .setOrigin(0.5);
-    
+    const win = message === "Игрок выиграл";
+
+    if (win) {
+        this.balance += this.currentBet * 2; // Удваиваем ставку и добавляем к балансу
+    } else {
+        this.balance -= this.currentBet; // Вычитаем ставку из баланса
+    }
     
     }
     updatePlayerScore(telegramId, score) {
