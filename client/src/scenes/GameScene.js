@@ -30,7 +30,6 @@ export class GameScene extends Phaser.Scene {
         console.log("Игрок:", user.first_name);
         this.loadPlayerData(user.id);
     // Получение данных игрока
-        getPlayerScore(user.id);  
         this.createUI();
         this.cameras.main.setBackgroundColor('#35654d');
         this.deck = new Deck(this);
@@ -60,15 +59,6 @@ export class GameScene extends Phaser.Scene {
             });
     }
 
-    getPlayerScore(telegramId) {
-        fetch(`https://21server.vercel.app/api/player?id=${telegramId}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Игрок:', data.name, 'Очки:', data.score);
-                // Здесь вы можете использовать данные для отображения на UI
-            })
-            .catch((error) => console.error('Ошибка при получении данных игрока:', error));
-    }
     dealInitialCards() {
         for (let i = 0; i < 2; i++) {
             this.playerHand.push(this.deck.dealCard());
