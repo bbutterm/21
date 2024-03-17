@@ -176,7 +176,7 @@ export class GameScene extends Phaser.Scene {
         let playerScore = this.calculateScore(this.playerHand);
         let dealerScore = this.calculateScore(this.dealerHand);
     
-        if (dealerScore > 21 || playerScore >dealerScore) {
+        if (dealerScore > 21 || (playerScore<=21 && playerScore >dealerScore)) {
             this.endGame('WIN');
         } else if (dealerScore > playerScore) {
             this.endGame('LOSER');
@@ -235,7 +235,7 @@ export class GameScene extends Phaser.Scene {
         let dealerScore = this.calculateScore(this.dealerHand);
         if (playerScore > 21) {
             this.endGame('LOSER');
-        } else if (dealerScore > 21 || playerScore <= 21) {
+        } else if (dealerScore > 21 || (playerScore<=21 && playerScore >dealerScore)) {
             this.endGame('WIN');
         } else if (playerScore < dealerScore) {
             this.endGame('LOSER');
