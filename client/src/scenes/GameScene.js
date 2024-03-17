@@ -159,7 +159,10 @@ export class GameScene extends Phaser.Scene {
         this.playerHand.push(this.deck.dealCard());
         this.displayCards();
         this.updateScores();
-        // Проверка на превышение 21 очка
+        // Проверка на превышение 21 очка  
+        if (this.calculateScore(this.playerHand) > 21) {
+            this.determineWinner();
+        }
     }
 
     playerStand() {
