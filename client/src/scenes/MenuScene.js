@@ -5,10 +5,15 @@ export class MenuScene extends Phaser.Scene {
 
     create() {
         // Задаем фон
-        this.cameras.main.setBackgroundColor('#35654d');
-        const user = Telegram.WebApp.initDataUnsafe.user;
-        console.log(user); // Выводит информацию о пользователе
-        this.add.text(20, 20, `Пользователь: ${user.first_name}`, { font: '16px Arial', fill: '#fff' });
+        const user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
+
+        // Отображение приветствия и очков
+        this.add.text(10, 10, `Привет, ${user.first_name}! Очки: ${user.score}`, { fontSize: '32px', fill: '#FFF' });
+
+        // Создание кнопки "Новая игра"
+        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Новая игра', { font: '24px Arial', fill: '#FFF' })
+            .setInteractive()
+            .on('pointerdown', () => this.scene.start('GameScene', { userId: user.id, score: user.score }));
          // Извлечение ID из хэша URL
         //const id = window.location.hash.slice(1);
          // Отображение ID в сцене
