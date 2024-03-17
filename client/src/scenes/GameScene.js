@@ -277,7 +277,8 @@ updatePlayerScore(score) {
         body: JSON.stringify({ id: telegramId, score }),
     })
     .then(response => response.text())
-    .then(data => console.log(data))
+    .then(data => console.log(data,'отправлено'))
     .catch((error) => console.error('Ошибка:', error));
+    console.log("скор изменен", score);
 }
 }
