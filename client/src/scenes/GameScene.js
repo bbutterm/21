@@ -234,11 +234,13 @@ export class GameScene extends Phaser.Scene {
         let playerScore = this.calculateScore(this.playerHand);
         let dealerScore = this.calculateScore(this.dealerHand);
         if (playerScore > 21) {
-            this.endGame('Игрок проиграл');
-        } else if (dealerScore > 21 || playerScore > dealerScore) {
-            this.endGame('Игрок выиграл');
+            this.endGame('Вы проиграли');
+        } else if (dealerScore > 21 || playerScore <= 21) {
+            this.endGame('Победа');
         } else if (playerScore < dealerScore) {
-            this.endGame('Дилер выиграл');
+            this.endGame('Вы проиграли');
+        } else if (playerScore>=dealerScore) {  
+            this.endGame('Победа');
         } else {
             this.endGame('Ничья');
         }
@@ -263,11 +265,10 @@ export class GameScene extends Phaser.Scene {
         this.scene.restart();
     })
     .setOrigin(0.5);
-    const win = message === "Игрок выиграл";
 
-    if (win) {
+    if (message="Победа") {
         this.balance += this.currentBet * 2; // Удваиваем ставку и добавляем к балансу
-    } else {
+    } else if(message="Вы проиграли") {
         this.balance -= this.currentBet; // Вычитаем ставку из баланса
     }
     this.updatePlayerScore(this.balance);
