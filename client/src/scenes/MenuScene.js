@@ -8,11 +8,11 @@ export class MenuScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#35654d');
         const user = Telegram.WebApp.initDataUnsafe.user;
         console.log(user); // Выводит информацию о пользователе
+        this.add.text(20, 20, `Пользователь: ${user.first_name}`, { font: '16px Arial', fill: '#fff' });
          // Извлечение ID из хэша URL
-        const id = window.location.hash.slice(1);
-
+        //const id = window.location.hash.slice(1);
          // Отображение ID в сцене
-         this.add.text(20, 20, `ID: ${id}`, { font: '16px Arial', fill: '#fff' });;
+         //this.add.text(20, 20, `ID: ${id}`, { font: '16px Arial', fill: '#fff' });;
 
         // Создаем кнопку "Играть"
         const playButton = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Играть', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
