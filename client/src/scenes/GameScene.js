@@ -9,7 +9,7 @@ export class GameScene extends Phaser.Scene {
         this.playerScore = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
      }
-     init(user) {
+    init(user) {
         this.user = user; // Получаем ID из переданных данных
     }
     // Получение данных о пользователе
@@ -91,7 +91,7 @@ export class GameScene extends Phaser.Scene {
         });
 
         // Кнопки для управления ставками
-    
+        this.createBetButtons(camera_width - 200, 120);
         // Кнопки управления
         this.hitButton = this.add.text(camera_width/6, camera_height-camera_height/15, 'Взять карту', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
         .setPadding(10, 10, 10, 10)
@@ -124,6 +124,19 @@ export class GameScene extends Phaser.Scene {
         console.log(`Текущая ставка: ${this.currentBet}`);
     }
     
+    createBetButtons(x, y) {
+        const betButtonStyle = { font: '16px Arial', fill: '#fff', backgroundColor: '#008f39' };
+
+        // Кнопка увеличения ставки
+        this.add.text(x, y, 'Увеличить ставку', betButtonStyle)
+            .setInteractive()
+            .on('pointerdown', () => this.changeBet(10));
+
+        // Кнопка уменьшения ставки
+        this.add.text(x, y + 30, 'Уменьшить ставку', betButtonStyle)
+            .setInteractive()
+            .on('pointerdown', () => this.changeBet(-10));
+    }
     
 
     playerHit() {
@@ -235,8 +248,7 @@ export class GameScene extends Phaser.Scene {
     }
     
 
-    endGame(message) {
-        console.log(result); // "Игрок выиграл" или "Игрок проиграл"
+    endGame(message) { // "Игрок выиграл" или "Игрок проиграл"
 
         const user = Telegram.WebApp.initDataUnsafe.user;
         this.updatePlayerScore(user.id, score);

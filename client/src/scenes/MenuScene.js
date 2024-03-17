@@ -14,11 +14,6 @@ export class MenuScene extends Phaser.Scene {
         this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Новая игра', { font: '24px Arial', fill: '#FFF' })
             .setInteractive()
             .on('pointerdown', () => this.scene.start('GameScene', { userId: user.id, score: user.score }));
-         // Извлечение ID из хэша URL
-        //const id = window.location.hash.slice(1);
-         // Отображение ID в сцене
-         //this.add.text(20, 20, `ID: ${id}`, { font: '16px Arial', fill: '#fff' });;
-
         // Создаем кнопку "Играть"
         const playButton = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Играть', { font: '50px Arial', fill: '#fff', backgroundColor: '#8B4513' })
             .setPadding(10, 10, 10, 10)
@@ -30,7 +25,7 @@ export class MenuScene extends Phaser.Scene {
             .setOrigin(0.5);
 
         // Опционально: добавляем текст счета игрока
-        const scoreText = this.add.text(this.cameras.main.width - 200, this.cameras.main.height - 50, 'Счет: 0', { fontSize: '32px', fill: '#FFF' }).setOrigin(0.5);
+        const scoreText = this.add.text(this.cameras.main.width - 200, this.cameras.main.height - 50, 'Score', { fontSize: '32px', fill: '#FFF' }).setOrigin(0.5);
     }
 }
 
