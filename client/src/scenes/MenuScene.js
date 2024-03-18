@@ -5,7 +5,7 @@ export class MenuScene extends Phaser.Scene {
 
     create() {
         // Задаем фон
-        const user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
+        const user = Telegram.WebApp.initDataUnsafe.user || { id: '13', first_name: 'Guest', score: 100 };
         this.cameras.main.setBackgroundColor('#35654d');
         // Отображение приветствия и очков
         this.add.text(10, 10, `Привет, ${user.first_name}!`, { fontSize: '32px', fill: '#FFF' });
@@ -38,7 +38,7 @@ export class MenuScene extends Phaser.Scene {
                     response = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: userId })
+                        body: JSON.stringify({ id: userId, score: 100 }),
                     });
                     if (response.ok) {
                         const newUser = await response.json();
