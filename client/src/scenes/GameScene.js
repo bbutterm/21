@@ -129,6 +129,9 @@ export class GameScene extends Phaser.Scene {
     }
         
     changeBet(amount) {
+        if (this.currentBet + amount > this.balance) {
+            return;
+        }
         this.currentBet += amount;
         this.currentBet = Math.max(10, this.currentBet);
         const camera_width = this.cameras.main.width;
@@ -287,7 +290,7 @@ updatePlayerScore(score) {
     //const user = Telegram.WebApp.initDataUnsafe.user;
     const telegramId = this.user.id;
 
-    fetch(`https://21server.vercel.app/api/player?id=${telegramId}`, {
+    fetch(`https://21server.vercel.app/api/player`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
