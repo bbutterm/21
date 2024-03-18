@@ -5,7 +5,7 @@ export class MenuScene extends Phaser.Scene {
 
     create() {
         let id = Telegram.WebApp?.initDataUnsafe?.user?.id || 22;
-        let name = Telegram.WebApp?.initDataUnsafe?.user?.name || 'Guest';
+        let name = Telegram.WebApp?.initDataUnsafe?.user?.first_name|| 'Guest';
         this.cameras.main.setBackgroundColor('#35654d');
         
         // Отображение приветствия и очков
