@@ -4,16 +4,20 @@ import { Card } from '../objects/Card.js';
     
 
 export class GameScene extends Phaser.Scene {
+
+    init(data) {
+        console.log(data);
+        this.user = data.user; // Получаем ID из переданных данных
+    }
     constructor() {
         super('GameScene');
         this.balance = 100; // Начальное значение будет установлено после загрузки данных
         this.currentBet = 10; // Начальная ставка
-        this.user = Telegram.WebApp.initDataUnsafe.user || { id: '0', first_name: 'Guest', score: 100 };
+        //this.user = Telegram.WebApp.initDataUnsafe.user || { id: '13', first_name: 'Guest', score: 100 };
      }
     // init(user) {
     //     this.user = user; // Получаем ID из переданных данных
     // }
-    // Получение данных о пользователе
     
     preload() {
         this.load.image('back', 'assets/cards/back1.png'); 
@@ -26,9 +30,10 @@ export class GameScene extends Phaser.Scene {
     }
 
     create() {
+        this.loadPlayerData(this.user.id);
+        this.balance=this.user.score;
         console.log("Игра началась с ID:", this.gameId);  
         console.log("Игрок:", this.user.first_name);
-        this.loadPlayerData(this.user.id);
         this.playerHand = [];
         this.dealerHand = [];
         
